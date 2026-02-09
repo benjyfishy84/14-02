@@ -33,7 +33,7 @@
       left: 0;
       width: 100%;
       height: 50px;
-      background: rgba(255, 182, 193, 0.6); /* tono rosa suave */
+      background: rgba(255, 182, 193, 0.6);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -130,14 +130,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 40px; /* SI y NO separados */
+      gap: 40px;
       margin-top: 20px;
       flex-wrap: nowrap;
       position: relative;
     }
 
     #yes, #no {
-      position: relative; /* evita superponer */
+      position: relative;
       z-index: 10;
     }
 
@@ -159,32 +159,12 @@
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 16px;
-        padding: 8px 12px;
-      }
-      button {
-        font-size: 14px;
-        padding: 12px 20px;
-      }
-      .screen {
-        min-height: 50vh;
-        padding: 16px;
-      }
-      .buttons {
-        height: 100px;
-      }
-
-      .screen video {
-        width: 80%;
-        max-width: 220px;
-        margin: 15px 0;
-      }
-
-      .screen p {
-        font-size: 10px;
-        margin-top: 5px;
-      }
+      h1 { font-size: 16px; padding: 8px 12px; }
+      button { font-size: 14px; padding: 12px 20px; }
+      .screen { min-height: 50vh; padding: 16px; }
+      .buttons { height: 100px; }
+      .screen video { width: 80%; max-width: 220px; margin: 15px 0; }
+      .screen p { font-size: 10px; margin-top: 5px; }
     }
   </style>
 </head>
@@ -232,10 +212,10 @@
 
 <div class="screen">
   <h1>Lo hice para proponerte pasar juntos el 14 de Febrero</h1>
- <h1>Que te parece?</h1>
+  <h1>Que te parece?</h1>
   <div class="buttons">
     <button id="yes" onclick="goFinal()">SI</button>
-    <button id="no" onmouseover="moveNo()">NO</button>
+    <button id="no">NO</button>
   </div>
 </div>
 
@@ -256,7 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
   screens.forEach(screen => screen.classList.remove("active"));
   screens[0].classList.add("active");
 
-  // Función para pasar de pestaña
   window.next = function() {
     screens[current].classList.remove("active");
     current++;
@@ -269,33 +248,50 @@ document.addEventListener("DOMContentLoaded", () => {
     screens[current].classList.add("active");
   };
 
-  // NO imposible: se mueve siempre, SI crece un poco
-  window.moveNo = function() {
-    const no = document.getElementById("no");
-    const yes = document.getElementById("yes");
-    const container = no.parentElement;
+  // NO imposible: huye del cursor y toca SI crece
+  const noButton = document.getElementById("no");
+  const yesButton = document.getElementById("yes");
+  const container = noButton.parentElement;
 
+  function moveNo(e) {
     const isMobile = window.innerWidth <= 480;
-    const moveMultiplier = isMobile ? 0.5 : 1; // más control en móvil
+    const moveMultiplier = isMobile ? 0.5 : 1;
 
-    const maxX = container.offsetWidth - no.offsetWidth;
-    const maxY = container.offsetHeight - no.offsetHeight;
+    let x, y;
 
-    const x = (Math.random() - 0.5) * maxX * moveMultiplier;
-    const y = (Math.random() - 0.5) * maxY * moveMultiplier;
+    if (!isMobile && e) {
+      const rect = container.getBoundingClientRect();
+      const cursorX = e.clientX - rect.left;
+      const cursorY = e.clientY - rect.top;
 
-    no.style.transition = 'transform 0.2s ease';
-    no.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random()*30-15}deg)`;
+      const noRect = noButton.getBoundingClientRect();
+      const noX = noButton.offsetLeft + noRect.width/2;
+      const noY = noButton.offsetTop + noRect.height/2;
 
-    // SI crece un poco
-    let currentScale = parseFloat(yes.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
+      x = (noX - cursorX) * moveMultiplier + (Math.random() - 0.5) * 30;
+      y = (noY - cursorY) * moveMultiplier + (Math.random() - 0.5) * 20;
+
+      x = Math.max(Math.min(x, container.offsetWidth - noButton.offsetWidth), -container.offsetWidth/2);
+      y = Math.max(Math.min(y, container.offsetHeight - noButton.offsetHeight), -container.offsetHeight/2);
+    } else {
+      x = (Math.random() - 0.5) * (container.offsetWidth - noButton.offsetWidth) * moveMultiplier;
+      y = (Math.random() - 0.5) * (container.offsetHeight - noButton.offsetHeight) * moveMultiplier;
+    }
+
+    noButton.style.transition = 'transform 0.2s ease';
+    noButton.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random()*30-15}deg)`;
+
+    let currentScale = parseFloat(yesButton.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
     currentScale += 0.1;
-    yes.style.transform = `scale(${currentScale})`;
-  };
+    yesButton.style.transform = `scale(${currentScale})`;
+  }
+
+  noButton.addEventListener("mousemove", moveNo);
+  noButton.addEventListener("touchstart", moveNo);
 
   // Partículas corazones
   const particlesContainer = document.getElementById('particles');
-  for(let i=0;i<150;i++){  // más partículas
+  for(let i=0;i<150;i++){
     const p=document.createElement('div');
     p.classList.add('particle','heart');
     const size=Math.random()*6+4;
