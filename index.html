@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>14/02</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -26,16 +26,30 @@
       position: relative;
     }
 
-    /* Encabezado arriba a la izquierda */
-    .header-number {
+    /* Barra de encabezado */
+    .header-bar {
       position: absolute;
-      top: 10px;
-      left: 20px;
-      color: white;
-      font-size: 28px;
-      font-weight: bold;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background: rgba(255, 182, 193, 0.6); /* tono rosa suave */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
       z-index: 20;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .header-number {
+      font-family: 'Great Vibes', cursive;
+      font-size: 32px;
+      color: white;
+    }
+
+    .header-emoji {
+      font-size: 28px;
     }
 
     /* Partículas flotantes - corazones */
@@ -112,7 +126,6 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     }
 
-    /* Botones */
     .buttons {
       display: flex;
       justify-content: center;
@@ -162,14 +175,12 @@
         height: 100px;
       }
 
-      /* Video más pequeño en celular */
       .screen video {
         width: 80%;
         max-width: 220px;
         margin: 15px 0;
       }
 
-      /* Párrafos más pequeños en celular */
       .screen p {
         font-size: 10px;
         margin-top: 5px;
@@ -180,8 +191,11 @@
 
 <body>
 
-<!-- Encabezado -->
-<div class="header-number">30</div>
+<!-- Barra de encabezado -->
+<div class="header-bar">
+  <div class="header-number">30</div>
+  <div class="header-emoji">♾️</div>
+</div>
 
 <div id="particles"></div>
 
@@ -216,7 +230,6 @@
   <div style="margin-top: 30px;"><button onclick="next()">Continuar</button></div>
 </div>
 
-<!-- Pestaña 6: SI a la izquierda, NO a la derecha -->
 <div class="screen">
   <h1>Tambien lo hice para preguntarte si queres pasar conmigo el 14 de Febrero</h1>
   <div class="buttons">
@@ -225,9 +238,8 @@
   </div>
 </div>
 
-<!-- Pestaña 7 -->
 <div class="screen">
-  <h1>Sabia que ubas a decir que sí jajaja</h1>
+  <h1>Sabia que ibas a decir que sí jajaja</h1>
   <h1>Te extraño mucho. Nos vemos el Sabado ✨</h1>
   <video src="videopestaña7.mp4" controls autoplay loop></video>
   <p>De: Benja <br> Para: Juli</p>
@@ -243,7 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
   screens.forEach(screen => screen.classList.remove("active"));
   screens[0].classList.add("active");
 
-  // Avanzar de pestaña
   window.next = function() {
     screens[current].classList.remove("active");
     current++;
@@ -256,7 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
     screens[current].classList.add("active");
   };
 
-  // NO imposible
   window.moveNo = function() {
     const no = document.getElementById("no");
     const yes = document.getElementById("yes");
@@ -278,7 +288,6 @@ document.addEventListener("DOMContentLoaded", () => {
     yes.style.transform = `scale(${currentScale})`;
   };
 
-  // Partículas corazones (más cantidad)
   const particlesContainer = document.getElementById('particles');
   for(let i=0;i<120;i++){
     const p=document.createElement('div');
@@ -306,3 +315,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
