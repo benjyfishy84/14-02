@@ -22,23 +22,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      overflow: hidden; /* bloquea scroll */
       position: relative;
     }
 
-    /* Partículas flotantes */
+    /* Partículas-corazones */
     .particle {
       position: absolute;
-      background: rgba(255,255,255,0.8);
+      width: 8px;
+      height: 8px;
+      background: pink;
       border-radius: 50%;
       pointer-events: none;
       animation: floatParticle linear infinite;
     }
 
+    .particle.heart::before {
+      content: "❤";
+      position: absolute;
+      font-size: 12px;
+      color: pink;
+      top: -2px;
+      left: -2px;
+    }
+
     @keyframes floatParticle {
-      0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+      0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      20% { opacity: 0.5; }
       50% { transform: translateY(-50px) translateX(10px) scale(0.8); opacity: 0.7; }
-      100% { transform: translateY(-100px) translateX(-10px) scale(1); opacity: 0; }
+      100% { transform: translateY(-120px) translateX(-10px) scale(1); opacity: 0; }
     }
 
     .screen {
@@ -51,12 +63,12 @@
       backdrop-filter: blur(10px);
       border-radius: 20px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 60vh;
       z-index: 1;
+      position: relative;
     }
 
     .screen.active {
@@ -124,7 +136,6 @@
       cursor: pointer;
     }
 
-    /* Responsive móvil */
     @media (max-width: 480px) {
       h1 {
         font-size: 18px;
@@ -147,81 +158,54 @@
 
 <body>
 
-  <!-- Contenedor partículas -->
-  <div id="particles"></div>
+<div id="particles"></div>
 
-  <!-- PESTAÑA 1 -->
-  <div class="screen active">
-    <h1>Hola Juli...</h1>
-    <img src="fotopestaña1.jpg">
-    <div style="margin-top: 30px;">
-      <button onclick="next()">Continuar</button>
-    </div>
+<!-- Pestañas -->
+<div class="screen active">
+  <h1>Hola Juli...</h1>
+  <img src="fotopestaña1.jpg">
+  <div style="margin-top: 30px;"><button onclick="next()">Continuar</button></div>
+</div>
+
+<div class="screen">
+  <h1>El otro dia dije una boludez tremenda, ya lo se...</h1>
+  <img src="fotopestaña2.jpg">
+  <div style="margin-top: 30px;"><button onclick="next()">Continuar</button></div>
+</div>
+
+<div class="screen">
+  <h1>Perdon ❤️</h1>
+  <div style="margin-top: 40px;"><button onclick="next()">Continuar</button></div>
+</div>
+
+<div class="screen">
+  <h1>Y ademas de hacer esto para pedirte perdon...</h1>
+  <div style="margin-top: 30px;"><button onclick="next()">Continuar</button></div>
+</div>
+
+<div class="screen">
+  <h1>Y ya que estoy, decir que soy el mejor haciendote sorpresas y sacandote siempre una sonrisa. Ya lo se. Im the best.</h1>
+  <video src="videopestaña5.mp4" autoplay muted loop></video>
+  <div style="margin-top: 30px;"><button onclick="next()">Continuar</button></div>
+</div>
+
+<div class="screen">
+  <h1>Es para preguntarte si queres ser mi San Valentin el Sabado</h1>
+  <div class="buttons">
+    <button id="yes" onclick="goFinal()">SI</button>
+    <button id="no" onmouseover="moveNo()">NO</button>
   </div>
+</div>
 
-  <!-- PESTAÑA 2 -->
-  <div class="screen">
-    <h1>El otro dia dije una boludez tremenda, ya lo se...</h1>
-    <img src="fotopestaña2.jpg">
-    <div style="margin-top: 30px;">
-      <button onclick="next()">Continuar</button>
-    </div>
-  </div>
-
-  <!-- PESTAÑA 3 -->
-  <div class="screen">
-    <h1>Perdon ❤️</h1>
-    <div style="margin-top: 40px;">
-      <button onclick="next()">Continuar</button>
-    </div>
-  </div>
-
-  <!-- PESTAÑA 4 -->
-  <div class="screen">
-    <h1>Y ademas de hacer esto para pedirte perdon...</h1>
-    <div style="margin-top: 30px;">
-      <button onclick="next()">Continuar</button>
-    </div>
-  </div>
-
-  <!-- PESTAÑA 5 -->
-  <div class="screen">
-    <h1>
-      Y ya que estoy, decir que soy el mejor haciendote sorpresas y sacandote siempre una sonrisa. Ya lo se. 
-      Im the best.
-    </h1>
-    
-    <img src="videopestaña5.webp">
-
-    <div style="margin-top: 30px;">
-      <button onclick="next()">Continuar</button>
-    </div>
-  </div>
-
-  <!-- PESTAÑA 6 -->
-  <div class="screen">
-    <h1>Es para preguntarte si queres ser mi San Valentin el Sabado</h1>
-    <div class="buttons">
-      <button id="yes" onclick="goFinal()">SI</button>
-      <button id="no" onmouseover="moveNo()">NO</button>
-    </div>
-  </div>
-
-  <!-- PESTAÑA 7 -->
-  <div class="screen">
-    <h1>Obviamente que si jajaja, nos vemos el sabado</h1>
-    <h1>Brillito ✨</h1>
-    <p style="color:white; font-size:14px; margin-top:30px;">
-      De: Benja <br> Para: Juli
-    </p>
-    <p style="color:white; font-size:14px; margin-top:30px;">
-      Te amo ❤️
-    </p> 
-  </div>
+<div class="screen">
+  <h1>Obviamente que si jajaja, nos vemos el sabado</h1>
+  <h1>Brillito ✨</h1>
+  <p style="color:white; font-size:14px; margin-top:30px;">De: Benja <br> Para: Juli</p>
+  <p style="color:white; font-size:14px; margin-top:30px;">Te amo ❤️</p>
+</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-
   let current = 0;
   const screens = document.querySelectorAll(".screen");
   let yesSize = 1;
@@ -229,18 +213,17 @@ document.addEventListener("DOMContentLoaded", () => {
   screens.forEach(screen => screen.classList.remove("active"));
   screens[0].classList.add("active");
 
-  window.next = function () {
+  window.next = function() {
     screens[current].classList.remove("active");
     current++;
     screens[current].classList.add("active");
   };
 
-  // --- NO imposible ajustado para PC y móviles ---
-  window.moveNo = function () {
+  // NO imposible
+  window.moveNo = function() {
     const no = document.getElementById("no");
     const yes = document.getElementById("yes");
     const container = no.parentElement;
-
     const maxX = container.offsetWidth - no.offsetWidth;
     const maxY = container.offsetHeight - no.offsetHeight;
 
@@ -252,42 +235,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     no.style.transform = `translate(${Math.min(x, maxX)}px, ${Math.min(y, maxY)}px) rotate(${Math.random()*30-15}deg)`;
 
-    let currentScale = parseFloat(yes.style.transform.replace(/scale\(([^)]+)\)/, '$1')) || 1;
+    let currentScale = parseFloat(yes.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
     currentScale += 0.1;
     yes.style.transform = `scale(${currentScale})`;
   };
 
-  window.goFinal = function () {
+  window.goFinal = function() {
     screens[current].classList.remove("active");
     current++;
     screens[current].classList.add("active");
   };
 
-  // --- Partículas sutiles ---
+  // Partículas corazones
   const particlesContainer = document.getElementById('particles');
-
-  for(let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.classList.add('particle');
-    const size = Math.random() * 6 + 4;
-    p.style.width = `${size}px`;
-    p.style.height = `${size}px`;
-    p.style.left = `${Math.random() * window.innerWidth}px`;
-    p.style.top = `${Math.random() * window.innerHeight}px`;
-    p.style.animationDuration = `${5 + Math.random() * 5}s`;
-    p.style.animationDelay = `${Math.random() * 5}s`;
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');
+    p.classList.add('particle','heart');
+    const size=Math.random()*6+4;
+    p.style.width=`${size}px`;
+    p.style.height=`${size}px`;
+    p.style.left=`${Math.random()*window.innerWidth}px`;
+    p.style.top=`${Math.random()*window.innerHeight}px`;
+    p.style.animationDuration=`${5+Math.random()*5}s`;
+    p.style.animationDelay=`${Math.random()*5}s`;
     particlesContainer.appendChild(p);
   }
 
-  // Ajustar partículas al redimensionar pantalla
-  window.addEventListener('resize', () => {
-    const particles = document.querySelectorAll('.particle');
-    particles.forEach(p => {
-      p.style.left = `${Math.random() * window.innerWidth}px`;
-      p.style.top = `${Math.random() * window.innerHeight}px`;
+  // Ajuste al redimensionar
+  window.addEventListener('resize', ()=>{
+    const particles=document.querySelectorAll('.particle');
+    particles.forEach(p=>{
+      p.style.left=`${Math.random()*window.innerWidth}px`;
+      p.style.top=`${Math.random()*window.innerHeight}px`;
     });
   });
-
 });
 </script>
 
