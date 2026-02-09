@@ -107,9 +107,13 @@
       align-items: center;
       gap: 40px; /* SI y NO separados */
       margin-top: 20px;
+      flex-wrap: nowrap;
       position: relative;
-      height: 120px;
-      flex-wrap: nowrap; /* no se enciman */
+    }
+
+    #yes, #no {
+      position: relative; /* evita superponer */
+      z-index: 10;
     }
 
     button {
@@ -123,18 +127,10 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      z-index: 10;
     }
 
     button:hover {
       transform: scale(1.05);
-    }
-
-    #no {
-      position: absolute;
-      background: #ff5f7e;
-      color: white;
-      cursor: pointer;
     }
 
     @media (max-width: 480px) {
@@ -186,11 +182,11 @@
 
 <div class="screen">
   <h1>Y ya que estoy, decir que soy el mejor haciendote sorpresas y sacandote siempre una sonrisa. Ya lo se. Im the best.</h1>
- <img src="videopestaña5.webp">
+  <video src="videopestaña5.mp4" autoplay muted loop></video>
   <div style="margin-top: 30px;"><button onclick="next()">Continuar</button></div>
 </div>
 
-<!-- Pestaña 6: SI y NO uno al lado del otro -->
+<!-- Pestaña 6: SI a la izquierda, NO a la derecha -->
 <div class="screen">
   <h1>Es para preguntarte si queres ser mi San Valentin el Sabado</h1>
   <div class="buttons">
@@ -240,11 +236,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const isMobile = window.innerWidth <= 480;
     const moveMultiplier = isMobile ? 1.5 : 1;
 
-    const x = Math.random() * maxX * moveMultiplier;
-    const y = Math.random() * maxY * moveMultiplier;
+    // Movimiento relativo, NO permanece a la derecha del SI
+    const x = (Math.random() - 0.5) * maxX * moveMultiplier;
+    const y = (Math.random() - 0.5) * maxY * moveMultiplier;
 
-    no.style.transform = `translate(${Math.min(x,maxX)}px, ${Math.min(y,maxY)}px) rotate(${Math.random()*30-15}deg)`;
+    no.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random()*30-15}deg)`;
 
+    // SI crece un poco
     let currentScale = parseFloat(yes.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
     currentScale += 0.1;
     yes.style.transform = `scale(${currentScale})`;
@@ -278,5 +276,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
-
 
