@@ -22,11 +22,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden; /* bloquea scroll */
+      overflow: hidden;
       position: relative;
     }
 
-    /* Partículas-corazones */
+    /* Partículas flotantes - corazones */
     .particle {
       position: absolute;
       width: 8px;
@@ -100,15 +100,16 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     }
 
+    /* Botones */
     .buttons {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px;
+      gap: 40px; /* SI y NO separados */
       margin-top: 20px;
       position: relative;
       height: 120px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap; /* no se enciman */
     }
 
     button {
@@ -185,10 +186,11 @@
 
 <div class="screen">
   <h1>Y ya que estoy, decir que soy el mejor haciendote sorpresas y sacandote siempre una sonrisa. Ya lo se. Im the best.</h1>
-  <video src="videopestaña5.mp4" autoplay muted loop></video>
+ <img src="videopestaña5.webp">
   <div style="margin-top: 30px;"><button onclick="next()">Continuar</button></div>
 </div>
 
+<!-- Pestaña 6: SI y NO uno al lado del otro -->
 <div class="screen">
   <h1>Es para preguntarte si queres ser mi San Valentin el Sabado</h1>
   <div class="buttons">
@@ -213,7 +215,14 @@ document.addEventListener("DOMContentLoaded", () => {
   screens.forEach(screen => screen.classList.remove("active"));
   screens[0].classList.add("active");
 
+  // Avanzar de pestaña
   window.next = function() {
+    screens[current].classList.remove("active");
+    current++;
+    screens[current].classList.add("active");
+  };
+
+  window.goFinal = function() {
     screens[current].classList.remove("active");
     current++;
     screens[current].classList.add("active");
@@ -224,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const no = document.getElementById("no");
     const yes = document.getElementById("yes");
     const container = no.parentElement;
+
     const maxX = container.offsetWidth - no.offsetWidth;
     const maxY = container.offsetHeight - no.offsetHeight;
 
@@ -233,17 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const x = Math.random() * maxX * moveMultiplier;
     const y = Math.random() * maxY * moveMultiplier;
 
-    no.style.transform = `translate(${Math.min(x, maxX)}px, ${Math.min(y, maxY)}px) rotate(${Math.random()*30-15}deg)`;
+    no.style.transform = `translate(${Math.min(x,maxX)}px, ${Math.min(y,maxY)}px) rotate(${Math.random()*30-15}deg)`;
 
     let currentScale = parseFloat(yes.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
     currentScale += 0.1;
     yes.style.transform = `scale(${currentScale})`;
-  };
-
-  window.goFinal = function() {
-    screens[current].classList.remove("active");
-    current++;
-    screens[current].classList.add("active");
   };
 
   // Partículas corazones
@@ -261,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
     particlesContainer.appendChild(p);
   }
 
-  // Ajuste al redimensionar
   window.addEventListener('resize', ()=>{
     const particles=document.querySelectorAll('.particle');
     particles.forEach(p=>{
@@ -269,8 +272,11 @@ document.addEventListener("DOMContentLoaded", () => {
       p.style.top=`${Math.random()*window.innerHeight}px`;
     });
   });
+
 });
 </script>
 
 </body>
 </html>
+
+
