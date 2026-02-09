@@ -231,7 +231,7 @@
 </div>
 
 <div class="screen">
-  <h1> Lo hice para proponerte pasar juntos el 14 de Febrero</h1>
+  <h1>Lo hice para proponerte pasar juntos el 14 de Febrero</h1>
   <p>Que te parece?</p>
   <div class="buttons">
     <button id="yes" onclick="goFinal()">SI</button>
@@ -256,6 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
   screens.forEach(screen => screen.classList.remove("active"));
   screens[0].classList.add("active");
 
+  // Función para pasar de pestaña
   window.next = function() {
     screens[current].classList.remove("active");
     current++;
@@ -268,29 +269,33 @@ document.addEventListener("DOMContentLoaded", () => {
     screens[current].classList.add("active");
   };
 
+  // NO imposible: se mueve siempre, SI crece un poco
   window.moveNo = function() {
     const no = document.getElementById("no");
     const yes = document.getElementById("yes");
     const container = no.parentElement;
 
+    const isMobile = window.innerWidth <= 480;
+    const moveMultiplier = isMobile ? 0.5 : 1; // más control en móvil
+
     const maxX = container.offsetWidth - no.offsetWidth;
     const maxY = container.offsetHeight - no.offsetHeight;
-
-    const isMobile = window.innerWidth <= 480;
-    const moveMultiplier = isMobile ? 1.5 : 1;
 
     const x = (Math.random() - 0.5) * maxX * moveMultiplier;
     const y = (Math.random() - 0.5) * maxY * moveMultiplier;
 
+    no.style.transition = 'transform 0.2s ease';
     no.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random()*30-15}deg)`;
 
+    // SI crece un poco
     let currentScale = parseFloat(yes.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
     currentScale += 0.1;
     yes.style.transform = `scale(${currentScale})`;
   };
 
+  // Partículas corazones
   const particlesContainer = document.getElementById('particles');
-  for(let i=0;i<120;i++){
+  for(let i=0;i<150;i++){  // más partículas
     const p=document.createElement('div');
     p.classList.add('particle','heart');
     const size=Math.random()*6+4;
@@ -310,7 +315,6 @@ document.addEventListener("DOMContentLoaded", () => {
       p.style.top=`${Math.random()*window.innerHeight}px`;
     });
   });
-
 });
 </script>
 
