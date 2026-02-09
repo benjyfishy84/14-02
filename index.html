@@ -159,19 +159,36 @@
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 16px; padding: 8px 12px; }
-      button { font-size: 14px; padding: 12px 20px; }
-      .screen { min-height: 50vh; padding: 16px; }
-      .buttons { height: 100px; }
-      .screen video { width: 80%; max-width: 220px; margin: 15px 0; }
-      .screen p { font-size: 10px; margin-top: 5px; }
+      h1 {
+        font-size: 16px;
+        padding: 8px 12px;
+      }
+      button {
+        font-size: 14px;
+        padding: 12px 20px;
+      }
+      .screen {
+        min-height: 50vh;
+        padding: 16px;
+      }
+      .buttons {
+        height: 100px;
+      }
+      .screen video {
+        width: 80%;
+        max-width: 220px;
+        margin: 15px 0;
+      }
+      .screen p {
+        font-size: 10px;
+        margin-top: 5px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<!-- Barra de encabezado -->
 <div class="header-bar">
   <div class="header-number">30</div>
   <div class="header-emoji">♾️</div>
@@ -248,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
     screens[current].classList.add("active");
   };
 
-  // NO imposible: huye del cursor y toca SI crece
+  // NO imposible: huye del cursor y SI crece hasta 2.5x
   const noButton = document.getElementById("no");
   const yesButton = document.getElementById("yes");
   const container = noButton.parentElement;
@@ -281,9 +298,12 @@ document.addEventListener("DOMContentLoaded", () => {
     noButton.style.transition = 'transform 0.2s ease';
     noButton.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random()*30-15}deg)`;
 
+    // SI crece hasta límite 2.5x
     let currentScale = parseFloat(yesButton.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
-    currentScale += 0.1;
-    yesButton.style.transform = `scale(${currentScale})`;
+    if(currentScale < 2.5){
+      currentScale += 0.1;
+      yesButton.style.transform = `scale(${currentScale})`;
+    }
   }
 
   noButton.addEventListener("mousemove", moveNo);
@@ -311,9 +331,11 @@ document.addEventListener("DOMContentLoaded", () => {
       p.style.top=`${Math.random()*window.innerHeight}px`;
     });
   });
+
 });
 </script>
 
 </body>
 </html>
+
 
