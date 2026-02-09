@@ -131,19 +131,24 @@
       De: Benja Para: Juli. Te amo ❤️
     </p>
   </div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
 
-  <script>
     let current = 0;
     const screens = document.querySelectorAll(".screen");
     let yesSize = 1;
 
-    function next() {
+    // Forzar inicio en la primera pestaña
+    screens.forEach(screen => screen.classList.remove("active"));
+    screens[0].classList.add("active");
+
+    window.next = function () {
       screens[current].classList.remove("active");
       current++;
       screens[current].classList.add("active");
-    }
+    };
 
-    function moveNo() {
+    window.moveNo = function () {
       const no = document.getElementById("no");
       const yes = document.getElementById("yes");
 
@@ -154,14 +159,16 @@
 
       yesSize += 0.15;
       yes.style.transform = `scale(${yesSize})`;
-    }
+    };
 
-    function goFinal() {
+    window.goFinal = function () {
       screens[current].classList.remove("active");
       current++;
       screens[current].classList.add("active");
-    }
-  </script>
+    };
+
+  });
+</script>
 
 </body>
 </html>
