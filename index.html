@@ -26,6 +26,18 @@
       position: relative;
     }
 
+    /* Encabezado arriba a la izquierda */
+    .header-number {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      z-index: 20;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
     /* Partículas flotantes - corazones */
     .particle {
       position: absolute;
@@ -135,8 +147,8 @@
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 18px;
-        padding: 10px 14px;
+        font-size: 16px;
+        padding: 8px 12px;
       }
       button {
         font-size: 14px;
@@ -149,11 +161,27 @@
       .buttons {
         height: 100px;
       }
+
+      /* Video más pequeño en celular */
+      .screen video {
+        width: 80%;
+        max-width: 220px;
+        margin: 15px 0;
+      }
+
+      /* Párrafos más pequeños en celular */
+      .screen p {
+        font-size: 10px;
+        margin-top: 5px;
+      }
     }
   </style>
 </head>
 
 <body>
+
+<!-- Encabezado -->
+<div class="header-number">30</div>
 
 <div id="particles"></div>
 
@@ -173,9 +201,7 @@
 <div class="screen">
   <h1>Perdon ❤️</h1>
   <h1>No estes enojada</h1>
-   <img src="fotopestaña3.jpeg" style="width:100%; border-radius:16px; margin:20px 0;">
-
-   
+  <img src="fotopestaña3.jpeg" style="width:100%; border-radius:16px; margin:20px 0;">
   <div style="margin-top: 40px;"><button onclick="next()">Continuar</button></div>
 </div>
 
@@ -199,21 +225,14 @@
   </div>
 </div>
 
+<!-- Pestaña 7 -->
 <div class="screen">
-  <h1>Obviamente que sí jajaja</h1>
-  <h1>Te extraño mucho ✨</h1>
-
-  <!-- Video más chico -->
-  <video src="videopestaña7.mp4" controls autoplay loop 
-         style="width: 90%; max-width: 280px; border-radius:16px; margin:15px 0;">
-  </video>
-
-  <p style="color:white; font-size:12px; margin-top:10px;">De: Benja <br> Para: Juli</p>
-  <p style="color:white; font-size:12px; margin-top:5px;">Te amo ❤️</p>
+  <h1>Sabia que ubas a decir que sí jajaja</h1>
+  <h1>Te extraño mucho. Nos vemos el Sabado ✨</h1>
+  <video src="videopestaña7.mp4" controls autoplay loop></video>
+  <p>De: Benja <br> Para: Juli</p>
+  <p>Te amo ❤️</p>
 </div>
-
-
-
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -249,21 +268,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const isMobile = window.innerWidth <= 480;
     const moveMultiplier = isMobile ? 1.5 : 1;
 
-    // Movimiento relativo, NO permanece a la derecha del SI
     const x = (Math.random() - 0.5) * maxX * moveMultiplier;
     const y = (Math.random() - 0.5) * maxY * moveMultiplier;
 
     no.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random()*30-15}deg)`;
 
-    // SI crece un poco
     let currentScale = parseFloat(yes.style.transform.replace(/scale\(([^)]+)\)/,'$1')) || 1;
     currentScale += 0.1;
     yes.style.transform = `scale(${currentScale})`;
   };
 
-  // Partículas corazones
+  // Partículas corazones (más cantidad)
   const particlesContainer = document.getElementById('particles');
-  for(let i=0;i<60;i++){
+  for(let i=0;i<120;i++){
     const p=document.createElement('div');
     p.classList.add('particle','heart');
     const size=Math.random()*6+4;
@@ -289,4 +306,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
-
